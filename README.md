@@ -157,10 +157,13 @@ Example:
 {
   "name": "Boss Hop",
   "encounters": [
-    "w1_vg"
+    "w1_vg",
+    "w3_kc",
+    "w1_sab",
+    "w4_sama"
   ]
 }
 ```
 The autosplitter will load the corresponding encounter definitions from the encounters folder and apply them in the specified order.
 
-This makes it possible to support multiple wing routes without duplicating encounter definitions.
+This makes it possible to support multiple custom routes without having to duplicate encounter definitions.
