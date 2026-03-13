@@ -1,11 +1,11 @@
-# Guild Wars 2 - Raid LiveSplit Autosplitter
+# Guild Wars 2 - `GW2 Auto Splitter` - LiveSplit
 
 This tool connects Guild Wars 2 (via the Mumble Link) with LiveSplit, allowing automatic start, reset, and splits based on in-game events.
 
 ## Installation
 
 1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the zip file containing:
-   - `GW2Splitter` (folder)
+   - `GW2AutoSplitter` (folder)
    - `LiveSplit.GW2.dll`
    - `GW2 - Raid Full Clear.lss`
    - `GW2 - Autosplitter.lsl`
@@ -143,7 +143,7 @@ Example:
 }
 ```
 
-Each file typically represents one encounter.
+Each file typically represents a single encounter, but it can also define multiple sections within the same instance.
 
 ### Routes
 
