@@ -2,22 +2,30 @@
 
 This tool connects Guild Wars 2 (via the Mumble Link) with LiveSplit, allowing automatic start, reset, and splits based on in-game events.
 
-## Installation Steps
+## Installation
 
 1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the zip file containing:
-   - GW2Splitter (folder)
-   - LiveSplit.GW2.dll
-   - GW2 - Raid Full Clear.lss
-   - GW2 - Autosplitter.lsl
+   - `GW2Splitter` (folder)
+   - `LiveSplit.GW2.dll`
+   - `GW2 - Raid Full Clear.lss`
+   - `GW2 - Autosplitter.lsl`
 
-2. Move `GW2Splitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/components` folder.
+2. Move the `GW2Splitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/components` folder.
 
-4. Start LiveSplit and load the `GW2 - Raid Full Clear.lss` and `GW2 - Autosplitter.lsl`. These contain the visuals and the techincal part behind LiveSplit.
+3. Start LiveSplit and load the provided splits and layout files.
 
-To load the files you do the following:
-- Right click LiveSplit window and choose 'open splits', choose from file and find `GW2 - Raid Full Clear.lss`. 
-- Right click LiveSplit window and choose 'open layout', choose from file and find `GW2 - Autosplitter.lsl`. 
+To load the files:
 
+- Right-click the LiveSplit window → **Open Splits** → **From File** → select `GW2 - Raid Full Clear.lss`
+- Right-click the LiveSplit window → **Open Layout** → **From File** → select `GW2 - Autosplitter.lsl`
+
+The splits file controls the timer splits, while the layout file contains the autosplitter logic.
+
+4. Select the desired mode:
+   - Right-click the LiveSplit window
+   - Choose **Edit Layout**
+   - Double-click **GW2 Auto Splitter**
+   - Select the mode and file if required
 
 # Documentation
 
@@ -33,6 +41,13 @@ Below is an example of how splits can be defined:
 {
   "mapId": 1062,
   "splits": [
+    {
+      "name": "split (not start) on load",
+      "trigger": {
+        "type": "map",
+        "mapId": "1062"
+      }
+    },
     {
       "name": "Vale Guardian",
       "trigger": {
@@ -56,6 +71,7 @@ Below is an example of how splits can be defined:
       }
     }
   ]
+}
 ```
 The top section contains the `mapId`, which identifies the map instance, followed by the list of `splits`.
 
@@ -93,8 +109,8 @@ This allows splits to trigger only when the player enters or leaves combat.
 
 ## Mode: Routes
 
-The mode `Routes` is used when a wing can be completed in different orders.  
-Instead of defining all splits in a single file, encounters are separated and then combined into routes.
+The mode `Routes` is used when you want to clear encounters in a custom order, for example Sabetha, Keep Construct, Vale Guardian, and then Sabir.  
+Instead of defining all splits in a single file, each encounter is defined separately and then combined into routes.
 
 This mode uses the two folders inside `GW2Splitter`:
 
@@ -124,4 +140,27 @@ Example:
       }
     }
   ]
-}```
+}
+```
+
+Each file typically represents one encounter.
+
+### Routes
+
+The routes folder defines the order encounters should be run in.
+
+A route file references encounter files by their file name and combines them into a full run.
+
+Example:
+
+```
+{
+  "name": "Boss Hop",
+  "encounters": [
+    "w1_vg"
+  ]
+}
+```
+The autosplitter will load the corresponding encounter definitions from the encounters folder and apply them in the specified order.
+
+This makes it possible to support multiple wing routes without duplicating encounter definitions.
