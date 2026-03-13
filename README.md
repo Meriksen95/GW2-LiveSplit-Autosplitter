@@ -121,12 +121,18 @@ This mode uses the two folders inside `GW2Splitter`:
 
 The `encounters` folder contains files that define individual encounters.
 
-Each encounter file uses the **same syntax as `FullWing`**, meaning it contains a `mapId`, a split `name`, and a `trigger`.
-Note that multiple splits can be contained within a singular encounter. ex: a start split and an end split one for starting combat and ending combat.
-Example:
+The top section contains the `id`, `name`, and `mapId`.
+
+- `id` – a unique identifier for the encounter. This is used by routes to reference the encounter file.
+- `name` – the display name of the encounter.
+- `mapId` – identifies the raid instance the encounter belongs to.
+
+Each encounter then defines its `splits`, which work exactly the same way as in `FullWing`.
 
 ```json
 {
+  "id": "w1_vg",
+  "name": "Sabir",
   "mapId": 1155,
   "splits": [
     {
@@ -153,7 +159,7 @@ A route file references encounter files by their file name and combines them int
 
 Example:
 
-```
+```json
 {
   "name": "Boss Hop",
   "encounters": [
