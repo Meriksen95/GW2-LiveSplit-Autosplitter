@@ -138,7 +138,6 @@ Examples:
 
 - `combatState` - `inCombat` or `outOfCombat`
 - `name` - stores the trigger name after it fires and automatically blocks the next trigger if it has the same name
-- `blockIfPreviousTrigger` - prevents a trigger if the previous trigger had that name
 
 Two triggers in a row must not use the same `name`, or the second one will never fire.
 
@@ -157,7 +156,7 @@ The `encounters` folder contains reusable encounter definitions:
 
 ```json
 {
-  "id": "w8_sabir",
+  "id": "w7_sabir",
   "name": "Sabir",
   "mapId": 1155,
   "splits": [

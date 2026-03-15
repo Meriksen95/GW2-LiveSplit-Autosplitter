@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95 d18.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.GW2", "LiveSplit.GW2.csproj", "{0DCD3708-42EB-D518-4A4F-B98A40A4C37D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DCD3708-42EB-D518-4A4F-B98A40A4C37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCD3708-42EB-D518-4A4F-B98A40A4C37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCD3708-42EB-D518-4A4F-B98A40A4C37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCD3708-42EB-D518-4A4F-B98A40A4C37D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24F30C92-3AF6-4803-B716-4A90F31F5187}
+	EndGlobalSection
+EndGlobal
