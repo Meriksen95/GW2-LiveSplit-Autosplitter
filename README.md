@@ -1,6 +1,6 @@
 # Guild Wars 2 - `GW2 Auto Splitter` - LiveSplit
 
-This tool connects Guild Wars 2 (via the Mumble Link) with LiveSplit, allowing automatic start, reset, and splits based on in-game events.
+This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing automatic start, reset, and splits based on in-game events.
 
 ## Installation
 
@@ -10,22 +10,20 @@ This tool connects Guild Wars 2 (via the Mumble Link) with LiveSplit, allowing a
    - `GW2 - Raid Full Clear.lss`
    - `GW2 - Autosplitter.lsl`
 
-2. Move the `GW2Splitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/components` folder.
+2. Move the `GW2AutoSplitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/Components` folder.
 
-3. Start LiveSplit and load the provided splits and layout files.
+3. Start LiveSplit and load the provided splits and layout files:
+   - Right-click the LiveSplit window -> **Open Splits** -> **From File** -> `GW2 - Raid Full Clear.lss`
+   - Right-click the LiveSplit window -> **Open Layout** -> **From File** -> `GW2 - Autosplitter.lsl`
 
-To load the files:
-
-- Right-click the LiveSplit window → **Open Splits** → **From File** → select `GW2 - Raid Full Clear.lss`
-- Right-click the LiveSplit window → **Open Layout** → **From File** → select `GW2 - Autosplitter.lsl`
-
-The splits file controls the timer splits, while the layout file contains the autosplitter logic.
-
-4. Select the desired mode:
+4. Configure the component:
    - Right-click the LiveSplit window
    - Choose **Edit Layout**
    - Double-click **GW2 Auto Splitter**
-   - Select the mode and file if required
+   - Select `FullWing` or `Route`
+   - If needed, select a route file
+
+Changes to JSON files inside `GW2AutoSplitter` are reloaded automatically.
 
 # Documentation
 
@@ -33,21 +31,12 @@ The splits file controls the timer splits, while the layout file contains the au
 
 The mode `FullWing` is used when running an entire raid wing from start to finish.
 
-Most wings are linear and only allow one path. Wing 7 and Wing 8 are exceptions. In these wings you must defeat **Sabir and Greer first**, as the splits (checkpoints) are defined in that order.
-
-Below is an example of how splits can be defined:
+Config files are loaded from `GW2AutoSplitter/fullwings` and matched by `mapId`.
 
 ```json
 {
   "mapId": 1062,
   "splits": [
-    {
-      "name": "split (not start) on load",
-      "trigger": {
-        "type": "map",
-        "mapId": "1062"
-      }
-    },
     {
       "name": "Vale Guardian",
       "trigger": {
@@ -57,81 +46,118 @@ Below is an example of how splits can be defined:
         "radius": 16,
         "combatState": "inCombat"
       }
-    },
-    {
-      "name": "Spirit Woods",
-      "trigger": {
-        "type": "polygon",
-        "points": [
-          { "x": -142.3909, "z": -456.5393 },
-          { "x": -111.2666, "z": -456.9705 },
-          { "x": -104.5161, "z": -469.6414 },
-          { "x": -148.2325, "z": -472.3882 }
-        ]
-      }
     }
   ]
 }
 ```
-The top section contains the `mapId`, which identifies the map instance, followed by the list of `splits`.
 
-Each split contains two objects:
+Each split contains:
 
-- `name` – the name of the split  
-- `trigger` – defines when the split should occur  
+- `name` - split name shown in LiveSplit
+- `trigger` - a single trigger
+- `ORtrigger` - one or more trigger options and can be used on its own without `trigger`
+
+Example with `ORtrigger`:
+
+```json
+{
+  "name": "Escort",
+  "ORtrigger": [
+    {
+      "type": "circle",
+      "x": 10.0,
+      "z": 25.0,
+      "radius": 12
+    },
+    {
+      "type": "map",
+      "mapId": 1122
+    }
+  ]
+}
+```
+
+Use `ORtrigger` when a split can happen in multiple ways. In that case, keep all trigger options inside `ORtrigger`.
 
 ### Trigger types
 
-Triggers define a location or event that creates a split.  
-Three trigger types are supported:
+- `circle` - 2D area using `x`, `z`, and `radius`
+- `sphere` - 3D area using `x`, `y`, `z`, and `radius`
+- `polygon` - area defined by at least three points
+- `map` - triggers when entering a specific `mapId`
+- `map_not` - triggers when leaving a specific `mapId`
 
-**circle**  
-A circular trigger area defined by `x`, `z`, and a `radius`.
+Examples:
 
-**polygon**  
-A custom trigger area defined by multiple points.  
-Requires at least **three points**, but can contain any number.
+```json
+{
+  "type": "circle",
+  "x": -121.3,
+  "z": -523.9,
+  "radius": 16,
+  "combatState": "inCombat"
+}
+```
 
-**map**  
-Triggers a split when the current map ID matches the defined `mapId`.
+```json
+{
+  "type": "polygon",
+  "points": [
+    { "x": -142.3, "z": -456.5 },
+    { "x": -111.2, "z": -456.9 },
+    { "x": -104.5, "z": -469.6 }
+  ]
+}
+```
 
-### Optional conditions
+```json
+{
+  "type": "sphere",
+  "x": 214.2,
+  "y": 12.5,
+  "z": -31.5,
+  "radius": 25
+}
+```
 
-Triggers can include the optional field `combatState`.
+```json
+{
+  "type": "map",
+  "mapId": 1062
+}
+```
 
-Possible values:
+```json
+{
+  "type": "map_not",
+  "mapId": 1062
+}
+```
 
-- `inCombat`
-- `outOfCombat`
+### Optional trigger fields
 
-This allows splits to trigger only when the player enters or leaves combat.
+- `combatState` - `inCombat` or `outOfCombat`
+- `name` - stores the trigger name after it fires and automatically blocks the next trigger if it has the same name
+- `blockIfPreviousTrigger` - prevents a trigger if the previous trigger had that name
 
+Two triggers in a row must not use the same `name`, or the second one will never fire.
 
-## Mode: Routes
+## Mode: Route
 
-The mode `Routes` is used when you want to clear encounters in a custom order, for example Sabetha, Keep Construct, Vale Guardian, and then Sabir.  
-Instead of defining all splits in a single file, each encounter is defined separately and then combined into routes.
+The mode `Route` is used when you want to clear encounters in a custom order.
 
-This mode uses the two folders inside `GW2Splitter`:
+This mode uses two folders inside `GW2AutoSplitter`:
 
 - `encounters`
 - `routes`
 
 ### Encounters
 
-The `encounters` folder contains files that define individual encounters.
-
-The top section contains the `id`, `name`, and `mapId`.
-
-- `id` – a unique identifier for the encounter. This is used by routes to reference the encounter file.
-- `name` – the display name of the encounter.
-- `mapId` – identifies the raid instance the encounter belongs to.
-
-Each encounter then defines its `splits`, which work exactly the same way as in `FullWing`.
+The `encounters` folder contains reusable encounter definitions:
 
 ```json
 {
-  "id": "w1_vg",
+  "id": "w8_sabir",
   "name": "Sabir",
   "mapId": 1155,
   "splits": [
@@ -149,15 +175,11 @@ Each encounter then defines its `splits`, which work exactly the same way as in 
 }
 ```
 
-Each file typically represents a single encounter, but it can also define multiple sections within the same instance.
+Each encounter defines `id`, `name`, `mapId`, and `splits`. The split format is the same as in `FullWing`.
 
 ### Routes
 
-The routes folder defines the order encounters should be run in.
-
-A route file references encounter files by their file name and combines them into a full run.
-
-Example:
+The `routes` folder defines the order encounters should run in:
 
 ```json
 {
@@ -170,6 +192,5 @@ Example:
   ]
 }
 ```
-The autosplitter will load the corresponding encounter definitions from the encounters folder and apply them in the specified order.
 
-This makes it possible to support multiple custom routes without having to duplicate encounter definitions.
+The autosplitter loads the listed encounter IDs and combines them into one run.
