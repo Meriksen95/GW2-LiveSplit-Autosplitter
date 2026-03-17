@@ -4,19 +4,28 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
 
 ## Installation
 
-1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the zip file containing:
-   - `GW2AutoSplitter` (folder)
-   - `LiveSplit.GW2.dll`
-   - `GW2 - Raid Full Clear.lss`
-   - `GW2 - Autosplitter.lsl`
+1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the package.
 
 2. Move the `GW2AutoSplitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/Components` folder.
 
-3. Start LiveSplit and load the provided splits and layout files:
-   - Right-click the LiveSplit window -> **Open Splits** -> **From File** -> `GW2 - Raid Full Clear.lss`
-   - Right-click the LiveSplit window -> **Open Layout** -> **From File** -> `GW2 - Autosplitter.lsl`
+3. `GW2AutoSplitter` now contains four folders and one file:
+   - `encounters` - reusable encounter definitions for `Route` mode
+   - `fullwings` - full wing configs for `FullWing` mode
+   - `routes` - route definitions that reference encounters
+   - `Split files - visual` - provided `.lss` split files and `.lsl` layout file
+   - `component-settings.xml` - persisted component settings created/updated by the autosplitter
 
-4. Configure the component:
+4. Start LiveSplit and load the provided visual files if you want the included split and layout setup:
+   - Right-click the LiveSplit window -> **Open Splits** -> **From File** -> choose an `.lss` file from `GW2AutoSplitter/Split files - visual`
+   - Right-click the LiveSplit window -> **Open Layout** -> **From File** -> choose the `.lsl` file from `GW2AutoSplitter/Split files - visual`
+
+5. If you do not use the provided `.lsl` layout, add the component manually:
+   - Right-click the LiveSplit window
+   - Choose **Edit Layout**
+   - Click the `+` button
+   - Under `Controls`, add `GW2 Auto Splitter`
+
+6. Configure the component:
    - Right-click the LiveSplit window
    - Choose **Edit Layout**
    - Double-click **GW2 Auto Splitter**
@@ -64,12 +73,14 @@ Example with `ORtrigger`:
   "name": "Escort",
   "ORtrigger": [
     {
+      "name": "place1",
       "type": "circle",
       "x": 10.0,
       "z": 25.0,
       "radius": 12
     },
     {
+      "name": "entering map",
       "type": "map",
       "mapId": 1122
     }
@@ -95,7 +106,8 @@ Examples:
   "x": -121.3,
   "z": -523.9,
   "radius": 16,
-  "combatState": "inCombat"
+  "combatState": "inCombat",
+  "yAbove": 10.0
 }
 ```
 
@@ -137,9 +149,14 @@ Examples:
 ### Optional trigger fields
 
 - `combatState` - `inCombat` or `outOfCombat`
+- `yAbove` - only triggers if the player's `y` value is strictly greater than this value
+- `yBelow` - only triggers if the player's `y` value is strictly lower than this value
 - `name` - stores the trigger name after it fires and automatically blocks the next trigger if it has the same name
 
 Two triggers in a row must not use the same `name`, or the second one will never fire.
+
+`yAbove` and `yBelow` can be combined to limit a trigger to a vertical range. This is useful when two triggers overlap on `x`/`z` but sit on different heights.
+
 
 ## Mode: Route
 
@@ -157,7 +174,6 @@ The `encounters` folder contains reusable encounter definitions:
 ```json
 {
   "id": "w7_sabir",
-  "name": "Sabir",
   "mapId": 1155,
   "splits": [
     {
@@ -174,7 +190,9 @@ The `encounters` folder contains reusable encounter definitions:
 }
 ```
 
-Each encounter defines `id`, `name`, `mapId`, and `splits`. The split format is the same as in `FullWing`.
+Each encounter defines `id`, `mapId`, and `splits`. For consistency, the visible split name should be placed on the split itself with `name`. The split format is the same as in `FullWing`.
+
+Routes reference encounters by their `id`. The encounter file name does not need to match the `id`, although keeping them similar makes the files easier to manage.
 
 ### Routes
 

@@ -31,8 +31,6 @@ namespace LiveSplit.GW2
 
         private bool _runStarted = false;
         private bool _inTransition = false;
-        private bool _configuredRunComplete = false;
-
         private uint _lastMapId = 0;
         private uint _lastInstance = 0;
         private uint _lastTick = 0;
@@ -228,8 +226,6 @@ namespace LiveSplit.GW2
             _routeName = "";
             _currentRouteIndex = 0;
             _lastTriggeredName = null;
-            _configuredRunComplete = false;
-
             try
             {
                 string fullWingsFolder = Path.Combine(_configRootFolder, "fullwings");
@@ -332,7 +328,9 @@ namespace LiveSplit.GW2
                     config.X.Value,
                     config.Z.Value,
                     config.Radius.Value,
-                    config.CombatState
+                    config.CombatState,
+                    config.YAbove,
+                    config.YBelow
                 );
             }
 
@@ -347,7 +345,9 @@ namespace LiveSplit.GW2
                     config.Y.Value,
                     config.Z.Value,
                     config.Radius.Value,
-                    config.CombatState
+                    config.CombatState,
+                    config.YAbove,
+                    config.YBelow
                 );
             }
 
@@ -366,7 +366,7 @@ namespace LiveSplit.GW2
                     points.Add(new PolygonPoint(point.X.Value, point.Z.Value));
                 }
 
-                return new PolygonTrigger(resolvedMapId, points, config.CombatState);
+                return new PolygonTrigger(resolvedMapId, points, config.CombatState, config.YAbove, config.YBelow);
             }
 
             if (type == "map_not")
@@ -459,15 +459,7 @@ namespace LiveSplit.GW2
             float playerZ = data.link.fAvatarPosition[2];
 
             HandleManualReset();
-            HandleManualStart();
-
-            if (_configuredRunComplete)
-            {
-                PauseTimerIfConfiguredRunComplete();
-                _debugText = BuildLiveDebugText(mapId, instance, playerX, playerY, playerZ, inCombat, uiTick);
-                RefreshSettingsUi();
-                return;
-            }
+            HandleManualStart(mapId);
 
             if (_routeMode)
                 HandleRouteSplitProgress(previousMapId, mapId, playerX, playerY, playerZ, inCombat);
@@ -510,7 +502,6 @@ namespace LiveSplit.GW2
             if (_timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && _runStarted)
             {
                 _runStarted = false;
-                _configuredRunComplete = false;
                 _lastSplitTime = DateTime.MinValue;
                 _currentRouteIndex = 0;
                 ResetAllSplits();
@@ -518,15 +509,33 @@ namespace LiveSplit.GW2
             }
         }
 
-        private void HandleManualStart()
+        private void HandleManualStart(uint mapId)
         {
             if (_timer.CurrentState.CurrentPhase == TimerPhase.Running && !_runStarted)
             {
                 _runStarted = true;
-                _configuredRunComplete = false;
                 _lastSplitTime = DateTime.UtcNow;
+                _currentRouteIndex = 0;
                 ResetAllSplits();
+                ResetWingSplitIndices();
+                SkipWingEntrySplitOnStart(mapId);
             }
+        }
+
+        private void SkipWingEntrySplitOnStart(uint mapId)
+        {
+            if (_routeMode)
+                return;
+
+            if (!_splitsByMap.TryGetValue(mapId, out List<ConfiguredSplit> splits))
+                return;
+
+            int index = _splitIndexByMap.TryGetValue(mapId, out int currentIndex) ? currentIndex : 0;
+
+            while (index < splits.Count && splits[index].Trigger != null && splits[index].Trigger.ShouldSkipWhenRunStarts(mapId))
+                index++;
+
+            _splitIndexByMap[mapId] = index;
         }
 
         private void HandleWingSplitProgress(uint previousMapId, uint mapId, float playerX, float playerY, float playerZ, bool inCombat)
@@ -547,10 +556,7 @@ namespace LiveSplit.GW2
                 return;
 
             if (TryTriggerSplit(splits[index], previousMapId, mapId, playerX, playerY, playerZ, inCombat))
-            {
                 _splitIndexByMap[mapId]++;
-                PauseTimerIfConfiguredRunComplete();
-            }
         }
 
         private void HandleRouteSplitProgress(uint previousMapId, uint mapId, float playerX, float playerY, float playerZ, bool inCombat)
@@ -565,10 +571,7 @@ namespace LiveSplit.GW2
                 return;
 
             if (TryTriggerSplit(_routeSplits[_currentRouteIndex], previousMapId, mapId, playerX, playerY, playerZ, inCombat))
-            {
                 _currentRouteIndex++;
-                PauseTimerIfConfiguredRunComplete();
-            }
         }
 
         private void ResetAllSplits()
@@ -610,35 +613,6 @@ namespace LiveSplit.GW2
             List<uint> keys = new List<uint>(_splitIndexByMap.Keys);
             foreach (uint key in keys)
                 _splitIndexByMap[key] = 0;
-        }
-
-        private void PauseTimerIfConfiguredRunComplete()
-        {
-            if (!AreAllConfiguredSplitsConsumed())
-                return;
-
-            _configuredRunComplete = true;
-
-            if (_timer.CurrentState.CurrentPhase == TimerPhase.Running)
-                _timer.Pause();
-        }
-
-        private bool AreAllConfiguredSplitsConsumed()
-        {
-            if (_routeMode)
-                return _routeSplits.Count > 0 && _currentRouteIndex >= _routeSplits.Count;
-
-            if (_splitsByMap.Count == 0)
-                return false;
-
-            foreach (KeyValuePair<uint, List<ConfiguredSplit>> pair in _splitsByMap)
-            {
-                int index = _splitIndexByMap.TryGetValue(pair.Key, out int currentIndex) ? currentIndex : 0;
-                if (index < pair.Value.Count)
-                    return false;
-            }
-
-            return true;
         }
 
         private bool IsRouteModeSelected()
@@ -925,7 +899,7 @@ namespace LiveSplit.GW2
 
         private string GetRunStateText()
         {
-            if (_configuredRunComplete || _timer.CurrentState.CurrentPhase == TimerPhase.Ended)
+            if (_timer.CurrentState.CurrentPhase == TimerPhase.Ended)
                 return "Completed";
 
             return _runStarted ? "Tracking" : "Idle";
@@ -1002,6 +976,7 @@ namespace LiveSplit.GW2
             bool CanTriggerDuringTransition { get; }
             string LastTriggeredName { get; }
             bool IsTriggered(uint previousMapId, uint mapId, float playerX, float playerY, float playerZ, bool inCombat, bool inTransition, string previousTriggerName);
+            bool ShouldSkipWhenRunStarts(uint mapId);
             void Reset();
         }
 
@@ -1012,14 +987,18 @@ namespace LiveSplit.GW2
             public float Z { get; }
             public float Radius { get; }
             public string CombatState { get; }
+            public float? YAbove { get; }
+            public float? YBelow { get; }
 
-            public PositionTrigger(uint mapId, float x, float z, float radius, string combatState)
+            public PositionTrigger(uint mapId, float x, float z, float radius, string combatState, float? yAbove, float? yBelow)
             {
                 MapId = mapId;
                 X = x;
                 Z = z;
                 Radius = radius;
                 CombatState = combatState;
+                YAbove = yAbove;
+                YBelow = yBelow;
             }
 
             public bool CanTriggerDuringTransition => false;
@@ -1037,12 +1016,20 @@ namespace LiveSplit.GW2
                 if (CombatState == CombatStateOutOfCombat && inCombat)
                     return false;
 
+                if (!MatchesVerticalBounds(playerY, YAbove, YBelow))
+                    return false;
+
                 float dx = playerX - X;
                 float dz = playerZ - Z;
                 float distanceSquared = dx * dx + dz * dz;
                 float radiusSquared = Radius * Radius;
 
                 return distanceSquared <= radiusSquared;
+            }
+
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return false;
             }
 
             public void Reset()
@@ -1058,8 +1045,10 @@ namespace LiveSplit.GW2
             public float Z { get; }
             public float Radius { get; }
             public string CombatState { get; }
+            public float? YAbove { get; }
+            public float? YBelow { get; }
 
-            public SphereTrigger(uint mapId, float x, float y, float z, float radius, string combatState)
+            public SphereTrigger(uint mapId, float x, float y, float z, float radius, string combatState, float? yAbove, float? yBelow)
             {
                 MapId = mapId;
                 X = x;
@@ -1067,6 +1056,8 @@ namespace LiveSplit.GW2
                 Z = z;
                 Radius = radius;
                 CombatState = combatState;
+                YAbove = yAbove;
+                YBelow = yBelow;
             }
 
             public bool CanTriggerDuringTransition => false;
@@ -1084,6 +1075,9 @@ namespace LiveSplit.GW2
                 if (CombatState == CombatStateOutOfCombat && inCombat)
                     return false;
 
+                if (!MatchesVerticalBounds(playerY, YAbove, YBelow))
+                    return false;
+
                 float dx = playerX - X;
                 float dy = playerY - Y;
                 float dz = playerZ - Z;
@@ -1091,6 +1085,11 @@ namespace LiveSplit.GW2
                 float radiusSquared = Radius * Radius;
 
                 return distanceSquared <= radiusSquared;
+            }
+
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return false;
             }
 
             public void Reset()
@@ -1103,12 +1102,16 @@ namespace LiveSplit.GW2
             public uint MapId { get; }
             public List<PolygonPoint> Points { get; }
             public string CombatState { get; }
+            public float? YAbove { get; }
+            public float? YBelow { get; }
 
-            public PolygonTrigger(uint mapId, List<PolygonPoint> points, string combatState)
+            public PolygonTrigger(uint mapId, List<PolygonPoint> points, string combatState, float? yAbove, float? yBelow)
             {
                 MapId = mapId;
                 Points = points;
                 CombatState = combatState;
+                YAbove = yAbove;
+                YBelow = yBelow;
             }
 
             public bool CanTriggerDuringTransition => false;
@@ -1126,7 +1129,15 @@ namespace LiveSplit.GW2
                 if (CombatState == CombatStateOutOfCombat && inCombat)
                     return false;
 
+                if (!MatchesVerticalBounds(playerY, YAbove, YBelow))
+                    return false;
+
                 return IsPointInsidePolygon(playerX, playerZ, Points);
+            }
+
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return false;
             }
 
             public void Reset()
@@ -1177,6 +1188,11 @@ namespace LiveSplit.GW2
                 return previousMapId != mapId && mapId == TargetMapId;
             }
 
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return mapId == TargetMapId;
+            }
+
             public void Reset()
             {
             }
@@ -1200,6 +1216,11 @@ namespace LiveSplit.GW2
                 return mapId != TargetMapId;
             }
 
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return false;
+            }
+
             public void Reset()
             {
             }
@@ -1219,6 +1240,11 @@ namespace LiveSplit.GW2
             public string LastTriggeredName => null;
 
             public bool IsTriggered(uint previousMapId, uint mapId, float playerX, float playerY, float playerZ, bool inCombat, bool inTransition, string previousTriggerName)
+            {
+                return false;
+            }
+
+            public bool ShouldSkipWhenRunStarts(uint mapId)
             {
                 return false;
             }
@@ -1276,6 +1302,17 @@ namespace LiveSplit.GW2
                 return false;
             }
 
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                foreach (ITrigger trigger in _triggers)
+                {
+                    if (trigger != null && trigger.ShouldSkipWhenRunStarts(mapId))
+                        return true;
+                }
+
+                return false;
+            }
+
             public void Reset()
             {
                 _lastTriggeredName = null;
@@ -1324,6 +1361,11 @@ namespace LiveSplit.GW2
                 return true;
             }
 
+            public bool ShouldSkipWhenRunStarts(uint mapId)
+            {
+                return _innerTrigger != null && _innerTrigger.ShouldSkipWhenRunStarts(mapId);
+            }
+
             public void Reset()
             {
                 _lastTriggeredName = null;
@@ -1341,6 +1383,17 @@ namespace LiveSplit.GW2
                 X = x;
                 Z = z;
             }
+        }
+
+        private static bool MatchesVerticalBounds(float playerY, float? yAbove, float? yBelow)
+        {
+            if (yAbove.HasValue && playerY <= yAbove.Value)
+                return false;
+
+            if (yBelow.HasValue && playerY >= yBelow.Value)
+                return false;
+
+            return true;
         }
     }
 }

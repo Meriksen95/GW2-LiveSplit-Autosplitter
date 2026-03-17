@@ -89,6 +89,12 @@ namespace LiveSplit.GW2
 
         [JsonProperty("combatState")]
         public string CombatState { get; set; }
+
+        [JsonProperty("yAbove")]
+        public float? YAbove { get; set; }
+
+        [JsonProperty("yBelow")]
+        public float? YBelow { get; set; }
     }
 
     public class TriggerPointConfig
