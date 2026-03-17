@@ -4,28 +4,28 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
 
 ## Installation
 
-1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the package.
+1. [Download](https://github.com/Meriksen95/GW2-LiveSplit-Autosplitter/releases/latest/download/GW2AutoSplitter.zip) the package.
 
-2. Move the `GW2AutoSplitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/Components` folder.
+5. Move the `GW2AutoSplitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/Components` folder.
 
-3. `GW2AutoSplitter` now contains four folders and one file:
+6. `GW2AutoSplitter` now contains four folders and one file:
    - `encounters` - reusable encounter definitions for `Route` mode
    - `fullwings` - full wing configs for `FullWing` mode
    - `routes` - route definitions that reference encounters
    - `Split files - visual` - provided `.lss` split files and `.lsl` layout file
    - `component-settings.xml` - persisted component settings created/updated by the autosplitter
 
-4. Start LiveSplit and load the provided visual files if you want the included split and layout setup:
+7. Start LiveSplit and load the provided visual files if you want the included split and layout setup:
    - Right-click the LiveSplit window -> **Open Splits** -> **From File** -> choose an `.lss` file from `GW2AutoSplitter/Split files - visual`
    - Right-click the LiveSplit window -> **Open Layout** -> **From File** -> choose the `.lsl` file from `GW2AutoSplitter/Split files - visual`
 
-5. If you do not use the provided `.lsl` layout, add the component manually:
+8. If you do not use the provided `.lsl` layout, add the component manually:
    - Right-click the LiveSplit window
    - Choose **Edit Layout**
    - Click the `+` button
    - Under `Controls`, add `GW2 Auto Splitter`
 
-6. Configure the component:
+9. Configure the component:
    - Right-click the LiveSplit window
    - Choose **Edit Layout**
    - Double-click **GW2 Auto Splitter**
