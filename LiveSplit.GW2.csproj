@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="LiveSplit.Local.props" Condition="Exists('LiveSplit.Local.props')" />
+
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <AssemblyName>LiveSplit.GW2</AssemblyName>
+    <RootNamespace>LiveSplit.GW2</RootNamespace>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <Target Name="EnsureLiveSplitDirIsConfigured" BeforeTargets="ResolveReferences" Condition="'$(LiveSplitDir)' == ''">
+    <Error Text="Set LiveSplitDir in LiveSplit.Local.props. See LiveSplit.Local.props.example." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="LiveSplit.Core">
+      <HintPath>$(LiveSplitDir)\LiveSplit.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="UpdateManager">
+      <HintPath>$(LiveSplitDir)\UpdateManager.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>
