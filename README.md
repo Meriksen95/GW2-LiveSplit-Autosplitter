@@ -32,7 +32,9 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
    - Select `FullWing` or `Route`
    - If needed, select a route file
 
-Changes to JSON files inside `GW2AutoSplitter` are reloaded automatically.
+7. *Optional* Bind your LiveSplit `Split/Resume` hotkey to something convenient so you can stop the timer when the final encounter ends.
+
+Changes to JSON files inside `GW2AutoSplitter` are reloaded automatically and therefore no need to close and open LiveSplit once changes are made.
 
 # Documentation
 
