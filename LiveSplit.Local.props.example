@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <LiveSplitDir>C:\Path\To\LiveSplit</LiveSplitDir>
+  </PropertyGroup>
+</Project>
