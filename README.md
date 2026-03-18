@@ -36,12 +36,6 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
 
 Changes to JSON files inside `GW2AutoSplitter` are reloaded automatically and therefore no need to close and open LiveSplit once changes are made.
 
-# Development
-
-To build locally, copy `LiveSplit.Local.props.example` to `LiveSplit.Local.props` and set `LiveSplitDir` to your local LiveSplit folder, for example the folder that contains `LiveSplit.Core.dll` and `UpdateManager.dll`.
-
-`LiveSplit.Local.props` is ignored by git, so local machine paths are not committed to the repository.
-
 # Documentation
 
 ## Mode: FullWing
