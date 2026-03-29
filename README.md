@@ -4,7 +4,7 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
 
 ## Installation
 
-1. [Download](https://github.com/Meriksen95/GW2-LiveSplit-Autosplitter/releases/latest/download/GW2AutoSplitter.zip) the package.
+1. [Download](https://github.com/Meriksen95/GW2-LiveSplit-Autosplitter/releases/latest/download/GW2AutoSplitter.zip) the package. If you want to create your own checkpoints, you can also download the separate `checkpoint_maker.py` helper tool from the [latest release page](https://github.com/Meriksen95/GW2-LiveSplit-Autosplitter/releases/latest) to process coordinates.
 
 2. Move the `GW2AutoSplitter` folder, `LiveSplit.GW2.dll`, and `Newtonsoft.Json.dll` into your `LiveSplit/Components` folder.
 
