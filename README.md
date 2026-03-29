@@ -6,7 +6,7 @@ This tool connects Guild Wars 2 (via Mumble Link) with LiveSplit, allowing autom
 
 1. [Download](https://github.com/Meriksen95/ECHO-Raid-Pack/releases/latest/download/ECHO-Raid-Pack.taco) the package.
 
-2. Move the `GW2AutoSplitter` folder and `LiveSplit.GW2.dll` into your `LiveSplit/Components` folder.
+2. Move the `GW2AutoSplitter` folder, `LiveSplit.GW2.dll`, and `Newtonsoft.Json.dll` into your `LiveSplit/Components` folder.
 
 3. `GW2AutoSplitter` now contains four folders and one file:
    - `encounters` - reusable encounter definitions for `Route` mode
