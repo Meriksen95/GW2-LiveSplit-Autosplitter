@@ -1,0 +1,30 @@
+{
+  "id": "w6_largos_pre",
+  "name": "Twin Largos Pre",
+  "mapId": 1303,
+  "splits": [
+    {
+      "name": "Twin Largos Pre",
+      "ORtrigger": [
+        {
+          "name": "Pre 1st room",
+          "type": "polygon",
+          "points": [
+            { "x": 99.38195, "z": -335.6689 },
+            { "x": 122.5546, "z": -365.3213 },
+            { "x": 174.5373, "z": -336.2082 },
+            { "x": 143.2101, "z": -290.4274 },
+            { "x": 118.4254, "z": -297.9521 }
+          ]
+        },
+        {
+          "name": "Ley Rift at Twin Largos",
+          "type": "circle",
+          "x": 386.0845,
+          "z": -200.0335,
+          "radius": 4.841818
+        }
+      ]
+    }
+  ]
+}

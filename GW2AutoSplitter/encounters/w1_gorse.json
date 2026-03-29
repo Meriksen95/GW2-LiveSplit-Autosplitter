@@ -1,0 +1,19 @@
+{
+  "id": "w1_gorse",
+  "name": "Gorseval",
+  "mapId": 1062,
+  "splits": [
+
+    {
+      "name": "Gorseval",
+      "trigger": {
+        "type": "circle",
+        "x": 41.22709,
+        "z": -113.6943,
+        "radius": 60.50216,
+        "combatState": "inCombat"
+      }
+    }
+
+  ]
+}

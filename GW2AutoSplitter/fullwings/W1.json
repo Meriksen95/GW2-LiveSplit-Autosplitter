@@ -1,0 +1,73 @@
+{
+  "mapId": 1062,
+  "splits": [
+
+    {
+      "name": "Vale Guardian Pre",
+      "trigger": {
+        "type": "map",
+        "mapId": 1062
+      }
+    },
+
+    {
+      "name": "Vale Guardian",
+      "trigger": {
+        "type": "circle",
+        "x": -121.3,
+        "z": -523.9,
+        "radius": 16,
+        "combatState": "inCombat"
+      }
+    },
+
+    {
+      "name": "Spirit Run",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": -142.4006, "z": -456.4077 },
+          { "x": -103.3682, "z": -465.6157 },
+          { "x": -92.50063, "z": -379.4614 },
+          { "x": -111.8083, "z": -371.4025 }
+        ]
+      }
+    },
+
+    {
+      "name": "Gorseval",
+      "trigger": {
+        "type": "circle",
+        "x": 41.22709,
+        "z": -113.6943,
+        "radius": 60.50216,
+        "combatState": "inCombat"
+      }
+    },
+
+    {
+      "name": "Sabetha Pre",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 32.31065, "z": -16.72391 },
+          { "x": 47.12652, "z": -14.31386 },
+          { "x": 31.6593, "z": 51.18337 },
+          { "x": -0.766957, "z": 47.00093 }
+        ]
+      }
+    },
+
+    {
+      "name": "Sabetha",
+      "trigger": {
+        "type": "circle",
+        "x": -129.6037,
+        "z": 83.53259,
+        "radius": 43.600327,
+        "combatState": "inCombat"
+      }
+    }
+
+  ]
+}

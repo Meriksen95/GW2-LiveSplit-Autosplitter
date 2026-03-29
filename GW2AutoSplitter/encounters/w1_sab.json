@@ -1,0 +1,19 @@
+{
+  "id": "w1_sab",
+  "name": "Sabetha",
+  "mapId": 1062,
+  "splits": [
+
+    {
+      "name": "Sabetha",
+      "trigger": {
+        "type": "circle",
+        "x": -129.6037,
+        "z": 83.53259,
+        "radius": 43.600327,
+        "combatState": "inCombat"
+      }
+    }
+
+  ]
+}

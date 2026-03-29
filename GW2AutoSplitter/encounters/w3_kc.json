@@ -1,0 +1,17 @@
+{
+  "id": "w3_kc",
+  "name": "Keep Construct",
+  "mapId": 1156,
+  "splits": [
+    {
+      "name": "Keep Construct",
+      "trigger": {
+        "type": "circle",
+        "x": -97.9866,
+        "z": 236.2151,
+        "radius": 45.183299,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

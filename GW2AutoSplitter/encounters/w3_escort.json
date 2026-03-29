@@ -1,0 +1,14 @@
+{
+  "id": "w3_escort",
+  "name": "Escort",
+  "mapId": 1156,
+  "splits": [
+    {
+      "name": "Escort",
+      "trigger": {
+        "type": "map",
+        "mapId": 1156
+      }
+    }
+  ]
+}

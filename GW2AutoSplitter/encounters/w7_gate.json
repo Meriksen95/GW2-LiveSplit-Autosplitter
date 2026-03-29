@@ -1,0 +1,14 @@
+{
+  "id": "w7_gate",
+  "name": "Gate",
+  "mapId": 1323,
+  "splits": [
+    {
+      "name": "Gate",
+      "trigger": {
+        "type": "map",
+        "mapId": 1323
+      }
+    }
+  ]
+}

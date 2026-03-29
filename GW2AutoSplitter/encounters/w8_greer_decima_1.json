@@ -1,0 +1,28 @@
+{
+  "id": "w8_greer_decima_1",
+  "name": "Greer/Decima",
+  "mapId": 1564,
+  "splits": [
+    {
+      "name": "Greer/Decima",
+      "ORtrigger": [
+        {
+          "name": "Greer",
+          "type": "circle",
+          "x": 365.4129,
+          "z": -185.6781,
+          "radius": 67.90041,
+          "combatState": "inCombat"
+        },
+        {
+          "name": "Decima",
+          "type": "circle",
+          "x": -266.2281,
+          "z": 324.0422,
+          "radius": 53.538862,
+          "combatState": "inCombat"
+        }
+      ]
+    }
+  ]
+}

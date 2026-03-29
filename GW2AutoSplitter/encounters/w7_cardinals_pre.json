@@ -1,0 +1,19 @@
+{
+  "id": "w7_cardinals_pre",
+  "name": "Cardinals Pre",
+  "mapId": 1323,
+  "splits": [
+    {
+      "name": "Cardinals Pre",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 81.27734, "z": -20.70738 },
+          { "x": 3.029207, "z": -20.69733 },
+          { "x": 2.487062, "z": -82.70153 },
+          { "x": 79.84193, "z": -82.02998 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "w6_ca",
+  "name": "Conjured Amalgamate",
+  "mapId": 1303,
+  "splits": [
+    {
+      "name": "Conjured Amalgamate",
+      "trigger": {
+        "type": "circle",
+        "x": -100.0134,
+        "z": -329.3311,
+        "radius": 53.142906,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

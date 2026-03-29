@@ -1,0 +1,14 @@
+{
+  "id": "w4_cairn_transition",
+  "name": "Cairn Transition",
+  "mapId": 1188,
+  "splits": [
+    {
+      "name": "Cairn Transition",
+      "trigger": {
+        "type": "map",
+        "mapId": 1188
+      }
+    }
+  ]
+}

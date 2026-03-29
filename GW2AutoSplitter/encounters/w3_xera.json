@@ -1,0 +1,18 @@
+{
+  "id": "w3_xera",
+  "name": "Xera",
+  "mapId": 1156,
+  "splits": [
+    {
+      "name": "Xera",
+      "trigger": {
+        "type": "sphere",
+        "x": -50.02109,
+        "y": 512.7446,
+        "z": -31.57798,
+        "radius": 25.661595,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

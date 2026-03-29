@@ -1,0 +1,17 @@
+{
+  "id": "w5_sh",
+  "name": "Soulless Horror",
+  "mapId": 1264,
+  "splits": [
+    {
+      "name": "Soulless Horror",
+      "trigger": {
+        "type": "circle",
+        "x": -269.2899,
+        "z": 21.94472,
+        "radius": 49.015691,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

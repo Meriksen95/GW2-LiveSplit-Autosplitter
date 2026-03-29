@@ -1,0 +1,17 @@
+{
+  "id": "w4_deimos",
+  "name": "Deimos",
+  "mapId": 1188,
+  "splits": [
+    {
+      "name": "Deimos",
+      "trigger": {
+        "type": "circle",
+        "x": -213.6666,
+        "z": 78.1398,
+        "radius": 75.896035,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

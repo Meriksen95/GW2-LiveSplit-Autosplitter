@@ -1,0 +1,28 @@
+{
+  "id": "w7_sabir_adina_1",
+  "name": "Sabir/Adina",
+  "mapId": 1323,
+  "splits": [
+    {
+      "name": "Sabir/Adina",
+      "ORtrigger": [
+        {
+          "name": "Adina",
+          "type": "circle",
+          "x": 378.5208,
+          "z": -37.25238,
+          "radius": 29.363948,
+          "combatState": "inCombat"
+        },
+        {
+          "name": "Sabir",
+          "type": "circle",
+          "x": -294.9149,
+          "z": 96.3448,
+          "radius": 15.705473,
+          "combatState": "inCombat"
+        }
+      ]
+    }
+  ]
+}

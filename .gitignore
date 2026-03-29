@@ -4,3 +4,5 @@ obj/
 *.user
 *.suo
 LiveSplit.Local.props
+GW2AutoSplitter/component-settings.xml
+GW2AutoSplitter/.vs/

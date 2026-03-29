@@ -1,0 +1,20 @@
+{
+  "id": "w2_sloth",
+  "name": "Slothasor",
+  "mapId": 1149,
+  "splits": [
+    {
+      "name": "Slothasor",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 231.9861, "z": -1.118733 },
+          { "x": 182.0212, "z": -0.939806 },
+          { "x": 197.2157, "z": 36.09529 },
+          { "x": 222.1502, "z": 32.51863 }
+        ],
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "mapId": 1188,
+  "splits": [
+
+    {
+      "name": "Cairn Transition",
+      "trigger": {
+        "type": "map",
+        "mapId": 1188
+      }
+    },
+
+    {
+      "name": "Cairn",
+      "trigger": {
+        "type": "circle",
+        "x": 364.6458,
+        "z": 51.12432,
+        "radius": 34.244894,
+        "combatState": "inCombat"
+      }
+    },
+
+    {
+      "name": "Mursaat Overseer Transition",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 231.9157, "z": 88.12946 },
+          { "x": 225.1513, "z": 65.29898 },
+          { "x": 203.0093, "z": 60.30267 },
+          { "x": 204.8316, "z": 79.80132 }
+        ]
+      }
+    },
+
+    {
+      "name": "Mursaat Overseer",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 98.8601, "z": 132.9653 },
+          { "x": 34.99536, "z": 132.9975 },
+          { "x": 35.36325, "z": 69.23927 },
+          { "x": 99.42912, "z": 69.48939 }
+        ]
+        ,"combatState": "inCombat"
+      }
+    },
+
+    {
+      "name": "Samarog",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": -16.3937, "z": 78.98891 },
+          { "x": -84.46607, "z": 131.3041 },
+          { "x": -132.6865, "z": 114.2203 },
+          { "x": -132.1174, "z": 23.26999 },
+          { "x": -61.68029, "z": 31.9727 }
+        ]
+        ,"combatState": "inCombat"
+      }
+    },
+    
+    {
+      "name": "Deimos",
+      "trigger": {
+        "type": "circle",
+        "x": -213.6666,
+        "z": 78.1398,
+        "radius": 75.896035,
+        "combatState": "inCombat"
+      }
+    }
+
+  ]
+}

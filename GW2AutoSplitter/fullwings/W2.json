@@ -1,0 +1,63 @@
+{
+  "mapId": 1149,
+  "splits": [
+
+    {
+      "name": "Slothasor Pre",
+      "trigger": {
+        "type": "map",
+        "mapId": 1149
+      }
+    },
+
+    {
+      "name": "Slothasor",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": 231.9861, "z": -1.118733 },
+          { "x": 182.0212, "z": -0.939806 },
+          { "x": 197.2157, "z": 36.09529 },
+          { "x": 222.1502, "z": 32.51863 }
+        ],
+        "combatState": "inCombat"
+      }
+    },
+
+    {
+      "name": "Bandit Trio",
+      "trigger": {
+        "type": "circle",
+        "x": 150.0775,
+        "z": -84.12795,
+        "radius": 13.261881
+      }
+    },
+
+    {
+      "name": "Matthias Pre",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": -2.517789, "z": -116.9206 },
+          { "x": -57.24829, "z": -123.7784 },
+          { "x": -64.25397, "z": -14.50105 },
+          { "x": -35.48262, "z": 12.86059 }
+        ]
+        ,"combatState": "outOfCombat"
+      }
+    },
+
+    {
+      "name": "Matthias",
+      "trigger": {
+        "type": "circle",
+        "x": -150.7795,
+        "z": 149.9148,
+        "radius": 31.134151,
+        "combatState": "inCombat"
+      }
+    }
+
+  ]
+}

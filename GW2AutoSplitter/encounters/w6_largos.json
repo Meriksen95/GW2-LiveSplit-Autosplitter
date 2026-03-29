@@ -1,0 +1,17 @@
+{
+  "id": "w6_largos",
+  "name": "Twin Largos",
+  "mapId": 1303,
+  "splits": [
+    {
+      "name": "Twin Largos",
+      "trigger": {
+        "type": "circle",
+        "x": 366.9878,
+        "z": -81.78601,
+        "radius": 63.544004,
+        "combatState": "inCombat"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "w3_tc",
+  "name": "Twisted Castle",
+  "mapId": 1156,
+  "splits": [
+    {
+      "name": "Twisted Castle",
+      "trigger": {
+        "type": "polygon",
+        "points": [
+          { "x": -91.43692, "z": 203.9331 },
+          { "x": -104.9762, "z": 203.853 },
+          { "x": -104.904, "z": 195.2159 },
+          { "x": -91.44056, "z": 195.1147 }
+        ]
+      }
+    }
+  ]
+}

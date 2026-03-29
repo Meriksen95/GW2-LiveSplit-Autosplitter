@@ -1,0 +1,14 @@
+{
+  "id": "w2_sloth_pre",
+  "name": "Slothasor Pre",
+  "mapId": 1149,
+  "splits": [
+    {
+      "name": "Slothasor Pre",
+      "trigger": {
+        "type": "map",
+        "mapId": 1149
+      }
+    }
+  ]
+}
